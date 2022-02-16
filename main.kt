@@ -16,54 +16,45 @@ data class Matrix(
 }
 
 fun main() {
-    val list = listOf("1", "2", "3")
-    val listOfLists = mutableListOf(
-        list.toMutableList(),
-        list.toMutableList(),
-        list.toMutableList()
+    val input = mutableListOf(
+        mutableListOf(1.0, 0.0, 0.0, 0.0, 0.0),
+        mutableListOf(1.0, 0.0, 1.0, 0.0, 0.0),
     )
+ 
+    val input2 = mutableListOf(
+        mutableListOf(1.0, 2.0, 0.0, 0.0, 1.0),
+        mutableListOf(1.0, 0.0, 1.0, 3.0, 0.0),
+    )
+ 
+    val matrix = Matrix(input)
+    val matrix2 = Matrix(input2)
 
-    println(listOfLists)
-
-    val firstList = listOfLists[0]
-    firstList[0] = "Hello"
-
-    println(listOfLists)
-
-
-    val sum = createEmptyInput(5, 5)
-    println(sum)
-
-    val firstRow = sum[0]
-    firstRow[0] = 1.0
+    val sum = matrixAddition(matrix, matrix2)
     println(sum)
 }
 
 // Matrix Operations: 
-fun matrixAddition(vararg matrices: Matrix) {
-    val emptyInput = createEmptyInput(matrices[0].columns, matrices[0].rows)
-    val sum = createEmptyMatrix(emptyInput)
-    println(sum)
+fun matrixAddition(vararg matrices: Matrix): Matrix{
+    val sum = createEmptyMatrix(matrices[0].rows, matrices[0].columns)
 
     for(m in matrices) {
-        println("Matrix used:\n $m")
         for(i in m.input.indices) {
             for(j in m.input[i].indices) {
                 sum.input[i][j] += m.input[i][j]
             }
         }
-        println(sum)
     }
+
+    return sum
 }
 
-fun createEmptyInput(rows: Int, columns: Int): MutableList<MutableList<Double>> {
+/* MutableList würde nicht funktionieren, da es keine tiefe Kopien gibt. 
+ * "column" muss selbst kopiert werden.
+ */
+fun createEmptyMatrix(rows: Int, columns: Int): Matrix {
     val column = List(columns) { 0.0 }
     val emptyInput = MutableList(rows) { column.toMutableList() }
 
-    return emptyInput
-}
-
-fun createEmptyMatrix(emptyInput: MutableList<MutableList<Double>>): Matrix {
     return Matrix(emptyInput)
 }
 
