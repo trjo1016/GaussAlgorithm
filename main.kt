@@ -1,5 +1,5 @@
 data class Matrix(
-    val input: List<List<Double>>,
+    val input: MutableList<MutableList<Double>>,
     val rows: Int = input.size,
     val columns: Int = input[0].size
 ) {
@@ -16,29 +16,59 @@ data class Matrix(
 }
 
 fun main() {
-    val input = listOf(
-       listOf(1.0, 0.0, 0.0, 0.0, 0.0),
-       listOf(0.0, 1.0, 0.0, 0.0, 0.0),
-       listOf(0.0, 0.0, 1.0, 0.0, 0.0),
-       listOf(0.0, 0.0, 0.0, 1.0, 0.0),
-       listOf(0.0, 0.0, 0.0, 0.0, 1.0), 
+    val list = listOf("1", "2", "3")
+    val listOfLists = mutableListOf(
+        list.toMutableList(),
+        list.toMutableList(),
+        list.toMutableList()
     )
 
-    val input2 = listOf(
-       listOf(1.0, 2.0, 0.0, 0.0, 1.0),
-       listOf(1.0, 1.0, 2.0, 2.0, 0.0),
-       listOf(4.0, 3.0, 0.0, 2.0, 2.0),
-       listOf(3.0, 2.0, 1.0, 1.0, 2.0),
-       listOf(2.0, 4.0, 3.0, 2.0, 3.0), 
-    )
+    println(listOfLists)
 
-    val matrix = Matrix(input)
-    println("Recently made: \n$matrix")
+    val firstList = listOfLists[0]
+    firstList[0] = "Hello"
+
+    println(listOfLists)
+
+
+    val sum = createEmptyInput(5, 5)
+    println(sum)
+
+    val firstRow = sum[0]
+    firstRow[0] = 1.0
+    println(sum)
 }
 
-// Matrix Operations
+// Matrix Operations: 
+fun matrixAddition(vararg matrices: Matrix) {
+    val emptyInput = createEmptyInput(matrices[0].columns, matrices[0].rows)
+    val sum = createEmptyMatrix(emptyInput)
+    println(sum)
+
+    for(m in matrices) {
+        println("Matrix used:\n $m")
+        for(i in m.input.indices) {
+            for(j in m.input[i].indices) {
+                sum.input[i][j] += m.input[i][j]
+            }
+        }
+        println(sum)
+    }
+}
+
+fun createEmptyInput(rows: Int, columns: Int): MutableList<MutableList<Double>> {
+    val column = MutableList(columns) { 0.0 }
+    val emptyInput = MutableList(rows) { column }
+
+    return emptyInput
+}
+
+fun createEmptyMatrix(emptyInput: MutableList<MutableList<Double>>): Matrix {
+    return Matrix(emptyInput)
+}
+
 fun stringToMatrix(matrixString: String, rows: Int, columns: Int) : Matrix {
-    val input: MutableList<List<Double>> = mutableListOf()
+    val input: MutableList<MutableList<Double>> = mutableListOf()
 
     val matrixArray = matrixString.split("\n").subList(1, 1 + rows)
 
