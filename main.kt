@@ -57,8 +57,8 @@ fun matrixAddition(vararg matrices: Matrix) {
 }
 
 fun createEmptyInput(rows: Int, columns: Int): MutableList<MutableList<Double>> {
-    val column = MutableList(columns) { 0.0 }
-    val emptyInput = MutableList(rows) { column }
+    val column = List(columns) { 0.0 }
+    val emptyInput = MutableList(rows) { column.toMutableList() }
 
     return emptyInput
 }
