@@ -7,7 +7,7 @@ data class Matrix(
         var matrixString = "\n"
         for(i in input.indices) {
             for(j in input[i].indices) {
-                matrixString += " ${input[i][j]}"
+                matrixString += "${input[i][j]}".padStart(6)
             }
             matrixString += "\n"
         }
@@ -25,16 +25,27 @@ fun main() {
         mutableListOf(1.0, 2.0, 0.0, 0.0, 1.0),
         mutableListOf(1.0, 0.0, 1.0, 3.0, 0.0),
     )
+
+    val input3 = mutableListOf(
+        mutableListOf(1.0, 3.0),
+        mutableListOf(-2.0, -1.0),
+        mutableListOf(-1.0, -1.0),
+        mutableListOf(-2.0, 0.0),
+    )
  
     val matrix = Matrix(input)
     val matrix2 = Matrix(input2)
+    val matrix3 = Matrix(input3)
 
-    val sum = matrixAddition(matrix, matrix2)
-    println(sum)
+/*     val sum = matrixSubtraction(matrix, matrix2)
+    println(sum) */
+
+    val product = matrixMultiplication(matrix3, matrix)
+    println(product)
 }
 
 // Matrix Operations: 
-fun matrixAddition(vararg matrices: Matrix): Matrix{
+fun matrixAddition(vararg matrices: Matrix): Matrix {
     val sum = createEmptyMatrix(matrices[0].rows, matrices[0].columns)
 
     for(m in matrices) {
@@ -48,6 +59,34 @@ fun matrixAddition(vararg matrices: Matrix): Matrix{
     return sum
 }
 
+fun matrixSubtraction(vararg matrices: Matrix): Matrix{
+    val diff = matrixAddition(matrices[0], matrices[0])
+
+    for(m in matrices) {
+        for(i in m.input.indices) {
+            for(j in m.input[i].indices) {
+                diff.input[i][j] += (-1.0) * m.input[i][j]
+            }
+        }
+    }
+
+    return diff
+}
+
+fun matrixMultiplication(m1: Matrix, m2: Matrix): Matrix {
+    val product = createEmptyMatrix(m1.rows, m2.columns)
+
+    for(i in 0..m1.rows - 1) {
+        for(j in 0..m2.columns - 1) {
+            for(k in 0..m1.columns - 1) {
+                product.input[i][j] += m1.input[i][k] * m2.input[k][j]
+            }
+        }
+    }
+
+    return product
+}
+
 /* MutableList würde nicht funktionieren, da es keine tiefe Kopien gibt. 
  * "column" muss selbst kopiert werden.
  */
@@ -58,7 +97,7 @@ fun createEmptyMatrix(rows: Int, columns: Int): Matrix {
     return Matrix(emptyInput)
 }
 
-fun stringToMatrix(matrixString: String, rows: Int, columns: Int) : Matrix {
+/* fun stringToMatrix(matrixString: String, rows: Int, columns: Int) : Matrix {
     val input: MutableList<MutableList<Double>> = mutableListOf()
 
     val matrixArray = matrixString.split("\n").subList(1, 1 + rows)
@@ -74,7 +113,7 @@ fun stringToMatrix(matrixString: String, rows: Int, columns: Int) : Matrix {
     }
 
     return Matrix(input)
-}
+} */
 
 // Basic Operations
 fun addition(vararg numbers: Double): Double {
@@ -82,9 +121,9 @@ fun addition(vararg numbers: Double): Double {
 }
 
 fun subtraction(vararg numbers: Double): Double {
-    val summand = addition(numbers[0], numbers[0])
-    val negativeSum = addition(*numbers)
-    return addition(summand, negativeSum)
+    val minuend = addition(numbers[0], numbers[0])
+    val negativeSum = (-1.0)*addition(*numbers)
+    return addition(minuend, negativeSum)
 }
 
 fun multiplication(vararg numbers: Double): Double {
