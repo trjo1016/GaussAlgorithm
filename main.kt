@@ -40,8 +40,8 @@ fun main() {
 /*     val sum = matrixSubtraction(matrix, matrix2)
     println(sum) */
 
-    val product = matrixMultiplication(matrix3, matrix)
-    println(product)
+/*     val product = matrixMultiplication(matrix3, matrix)
+    println(product) */
 }
 
 // Matrix Operations: 
@@ -59,7 +59,7 @@ fun matrixAddition(vararg matrices: Matrix): Matrix {
     return sum
 }
 
-fun matrixSubtraction(vararg matrices: Matrix): Matrix{
+fun matrixSubtraction(vararg matrices: Matrix): Matrix {
     val diff = matrixAddition(matrices[0], matrices[0])
 
     for(m in matrices) {
@@ -73,7 +73,11 @@ fun matrixSubtraction(vararg matrices: Matrix): Matrix{
     return diff
 }
 
-fun matrixMultiplication(m1: Matrix, m2: Matrix): Matrix {
+/* fun matrixMultiplikation(vararg matrices: Matrix): Matrix {
+    
+} */
+
+private fun mMult(m1: Matrix, m2: Matrix): Matrix {
     val product = createEmptyMatrix(m1.rows, m2.columns)
 
     for(i in 0..m1.rows - 1) {
@@ -95,6 +99,16 @@ fun createEmptyMatrix(rows: Int, columns: Int): Matrix {
     val emptyInput = MutableList(rows) { column.toMutableList() }
 
     return Matrix(emptyInput)
+}
+
+fun createNeutralMatrix(rows: Int, columns: Int): Matrix {
+    val matrix = createEmptyMatrix(rows, columns)
+
+    for(k in 0..rows - 1) {
+        matrix.input[k][k] = 1.0
+    }
+
+    return matrix
 }
 
 /* fun stringToMatrix(matrixString: String, rows: Int, columns: Int) : Matrix {
