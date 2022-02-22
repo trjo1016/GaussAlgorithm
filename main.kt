@@ -32,16 +32,25 @@ fun main() {
         mutableListOf(-1.0, -1.0),
         mutableListOf(-2.0, 0.0),
     )
+
+    val input4 = mutableListOf(
+        mutableListOf(1.0, 3.0),
+        mutableListOf(-2.0, -1.0),
+        mutableListOf(-1.0, -1.0),
+        mutableListOf(-2.0, 0.0),
+        mutableListOf(-2.0, 0.0),
+    )
  
     val matrix = Matrix(input)
     val matrix2 = Matrix(input2)
     val matrix3 = Matrix(input3)
+    val matrix4 = Matrix(input4)
 
 /*     val sum = matrixSubtraction(matrix, matrix2)
     println(sum) */
 
-/*     val product = matrixMultiplication(matrix3, matrix)
-    println(product) */
+    val product = matrixMultiplication(matrix3, matrix, matrix4, matrix2)
+    println(product)
 }
 
 // Matrix Operations: 
@@ -73,9 +82,17 @@ fun matrixSubtraction(vararg matrices: Matrix): Matrix {
     return diff
 }
 
-/* fun matrixMultiplikation(vararg matrices: Matrix): Matrix {
-    
-} */
+fun matrixMultiplication(vararg matrices: Matrix): Matrix {
+    val matrixList = matrices.map { it }
+    var product = createNeutralMatrix(matrices[0].rows)
+
+    for(matrix in matrixList) {
+        println(product)
+        product = mMult(product, matrix)
+    }
+
+    return product
+}
 
 private fun mMult(m1: Matrix, m2: Matrix): Matrix {
     val product = createEmptyMatrix(m1.rows, m2.columns)
@@ -101,10 +118,10 @@ fun createEmptyMatrix(rows: Int, columns: Int): Matrix {
     return Matrix(emptyInput)
 }
 
-fun createNeutralMatrix(rows: Int, columns: Int): Matrix {
-    val matrix = createEmptyMatrix(rows, columns)
+fun createNeutralMatrix(size: Int): Matrix {
+    val matrix = createEmptyMatrix(size, size)
 
-    for(k in 0..rows - 1) {
+    for(k in 0..size - 1) {
         matrix.input[k][k] = 1.0
     }
 
