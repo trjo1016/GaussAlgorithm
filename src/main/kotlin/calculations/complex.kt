@@ -1,6 +1,6 @@
-package gauss.calculations.complex
+package gauss.calculations
 
-import gauss.linearalgebra.matrix.Matrix
+import gauss.linearalgebra.Matrix
 
 class matrixOperations {
     fun matrixAddition(vararg matrices: Matrix): Matrix {

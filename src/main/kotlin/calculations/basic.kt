@@ -1,4 +1,4 @@
-package gauss.calculations.basic
+package gauss.calculations
 
 class basicOperations {
     fun addition(vararg numbers: Double): Double {

@@ -1,6 +1,7 @@
-import gauss.linearalgebra.matrix.Matrix
-import gauss.calculations.basic.basicOperations
-import gauss.calculations.complex.matrixOperations
+package gauss
+
+import gauss.linearalgebra.Matrix
+import gauss.calculations.matrixOperations
 
 fun main() {
     val mo = matrixOperations()

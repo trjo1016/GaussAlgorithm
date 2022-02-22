@@ -1,4 +1,4 @@
-package gauss.linearalgebra.matrix
+package gauss.linearalgebra
 
 data class Matrix (
     val input: MutableList<MutableList<Double>>,
